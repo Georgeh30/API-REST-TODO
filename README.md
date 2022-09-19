@@ -21,7 +21,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     python -m django --version
     py -m pip uninstall Django
     py -m pip install Django
-### 7. Creacion del nuevo proyecto [Django](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react)
+### 7. Creacion del nuevo proyecto [Django](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react), se recomienda llamarlo `config`
     django-admin startproject project's_name .
 ### 8. Creando la carpeta `core` e ingresando a ella para la creacion de la nueva aplicacion
     mkdir core
