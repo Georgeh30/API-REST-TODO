@@ -23,16 +23,27 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     py -m pip install Django
 ### 7. Creacion del nuevo proyecto [Django](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react)
     django-admin startproject project's_name .
-### 8. Creacion de una nueva aplicacion
-    python manage.py startapp app_name
-### 9. Ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
+### 8. Creando la carpeta `core` e ingresando a ella para la creacion de la nueva aplicacion
+    mkdir core
+    cd core
+    python ..\manage.py startapp app_name
+### 9. Ingresamos al archivo `core/app_name/apps.py` y agregamos el nombre de la carpeta `core.` dentro de la variable name que esta dentro de la clase que se crea por default
+    from django.apps import AppConfig
+
+    class TodoConfig(AppConfig):
+        default_auto_field = 'django.db.models.BigAutoField'
+        name = 'core.todo'
+### 10. Creamos el archivo llamado `__init__` dentro de la carpeta `core` con el siguiente comando y en seguida apretando (`CTRL + C`) para terminar de crear el archivo, este archivo debera ser creado en el mismo nivel de las carpetas de las aplicaciones que se crean dentro de la carpeta `core`
+    copy con __init__.py
+### 9. Regresando a la carpeta raiz, ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
+    cd ..
     python manage.py migrate
 ### 10. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
     python manage.py runserver
     python manage.py runserver 3000
 ### 11. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
     python manage.py --help
-### 12. Registro de la app `app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
+### 12. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -40,9 +51,9 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        'app_name',
+        'core.app_name',
     ]
-### 13. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
+### 13. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
     from django.db import models
 
     # Create your models here.
@@ -54,10 +65,10 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
         def _str_(self):
             return self.title
-### 14. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
-    python manage.py makemigrations app_name
-    python manage.py migrate app_name
-### 15. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `app_name/admin.py`
+### 14. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
+    python manage.py makemigrations
+    python manage.py migrate
+### 15. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
     from django.contrib import admin
     from .models import Todo
 
@@ -69,6 +80,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     admin.site.register(Todo, TodoAdmin)
 ### 16. Creación de la cuenta `superuser` para acceder a la interfaz de administración
     python manage.py createsuperuser
+
     Username (leave blank to use 'Computer_UserName'): superuser_name
     Email address: personal_email
     Password: password_we_want_to_use
