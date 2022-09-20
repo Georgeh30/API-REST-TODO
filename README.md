@@ -96,7 +96,8 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     py -m pip install djangorestframework django-cors-headers
 
 
-### 21. [Creacion de archivo requirements.txt](https://www.youtube.com/watch?v=90YKt9PlWZY) para especificar dependencias requeridas para usar este proyecto, para [instalar estas dependencias](https://gist.github.com/kamikaze-lab/7d5987ff86223e1bf686), se deberá ejecutar la segunda linea de comandos
+### [Creacion de archivo requirements.txt](https://www.youtube.com/watch?v=90YKt9PlWZY) e [Instalacion de estas dependencias](https://gist.github.com/kamikaze-lab/7d5987ff86223e1bf686)
+### 1. Para crear el archivo que especifica las dependencias requeridas para usar este proyecto y para la instalacion de las dependencias
     pip freeze > requirements.txt
     pip install -r requirements.txt
 
