@@ -1,7 +1,7 @@
 # API-REST-TODO
 REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web application where the only data is the task title and its description
 
-### Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
+## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
 ### 1. Desde la pagina [toptal](https://www.toptal.com/developers/gitignore/?templates=django), crearemos el archivo especial para django, para ello podemos copiar o guardar como `.gitignore` en la carpeta raiz de este proyecto, si copiamos los datos, tendremos que ejecutar los comandos de abajo para crear el archivo y pegar estos datos en el y despues apretando (`CTRL + C`) para terminar el proceso
     copy con .gitignore
 
