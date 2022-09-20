@@ -35,15 +35,15 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         name = 'core.todo'
 ### 10. Creamos el archivo llamado `__init__` dentro de la carpeta `core` con el siguiente comando y en seguida apretando (`CTRL + C`) para terminar de crear el archivo, este archivo debera ser creado en el mismo nivel de las carpetas de las aplicaciones que se crean dentro de la carpeta `core`
     copy con __init__.py
-### 9. Regresando a la carpeta raiz, ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
+### 11. Regresando a la carpeta raiz, ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
     cd ..
     python manage.py migrate
-### 10. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
+### 12. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
     python manage.py runserver
     python manage.py runserver 3000
-### 11. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
+### 13. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
     python manage.py --help
-### 12. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
+### 14. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -53,7 +53,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         'django.contrib.staticfiles',
         'core.app_name',
     ]
-### 13. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
+### 15. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
     from django.db import models
 
     # Create your models here.
@@ -65,10 +65,10 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
         def _str_(self):
             return self.title
-### 14. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
+### 16. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
     python manage.py makemigrations
     python manage.py migrate
-### 15. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
+### 17. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
     from django.contrib import admin
     from .models import Todo
 
@@ -78,7 +78,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # Register your models here.
 
     admin.site.register(Todo, TodoAdmin)
-### 16. Creación de la cuenta `superuser` para acceder a la interfaz de administración
+### 18. Creación de la cuenta `superuser` para acceder a la interfaz de administración
     python manage.py createsuperuser
 
     Username (leave blank to use 'Computer_UserName'): superuser_name
@@ -86,7 +86,13 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     Password: password_we_want_to_use
     Password (again): confirm_password
     Superuser created successfully.
-### 17. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingrezar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
+### 19. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingrezar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
     python manage.py runserver
-### 18. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
+### 20. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
     py -m pip install djangorestframework django-cors-headers
+
+
+### 21. [Creacion de archivo requirements.txt](https://www.youtube.com/watch?v=90YKt9PlWZY) para especificar dependencias requeridas para usar este proyecto, para [instalar estas dependencias](https://gist.github.com/kamikaze-lab/7d5987ff86223e1bf686), se deberá ejecutar la segunda linea de comandos
+    pip freeze > requirements.txt
+    pip install -r requirements.txt
+
