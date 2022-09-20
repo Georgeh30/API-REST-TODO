@@ -164,7 +164,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ### 18. Regresamos a la carpeta raiz ejecutando dos veces el comando de retroceso
     cd ..
     cd ..
-### 19. Dentro del archivo `manage.py`, agregaremos `.local` o `production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')`, dedando de esta manera el archivo
+### 19. Dentro del archivo `manage.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')`, dedando de esta manera el archivo
     #!/usr/bin/env python
     """Django's command-line utility for administrative tasks."""
     import os
