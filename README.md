@@ -1,11 +1,27 @@
 # API-REST-TODO
 REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web application where the only data is the task title and its description
 
+## Instalacion del lenguaje [python](https://www.youtube.com/watch?v=JqUV25aFRV0)
+
+### 1. Descargamos del [Instalador](https://www.python.org/downloads/)
+### 2. Abrimos el Instalador, marcamos la casilla `Add Python 3.10 to PATH` y seleccionamos `Install Now`
+### 3. Seleccionamos `Disable path length limit` para terminar la instalacion damos click en el boton `close`
+### 4. Verificamos en la consola (CMD) que reconozca el comando `python`
+    python --version
+    pip --version
+### 5. En caso de no reconocer el comando `python`, deberemos agregarlo a las [variables de entorno](https://www.sintaxisweb.com/2019/03/adicione-python-la-variable-path-del.html#:~:text=En%20su%20equipo%20ubique%20la,el%20listado%20variable%20de%20entorno.)
+## 6. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), activar el entorno virtual, instalar el framework django y todas las dependencias
+
+
 ## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
+
 ### 1. Desde la pagina [toptal](https://www.toptal.com/developers/gitignore/?templates=django), crearemos el archivo especial para django, para ello podemos copiar o guardar como `.gitignore` en la carpeta raiz de este proyecto, si copiamos los datos, tendremos que ejecutar los comandos de abajo para crear el archivo y pegar estos datos en el y despues apretando (`CTRL + C`) para terminar el proceso
     copy con .gitignore
 
+
 ## Steps for the creation of [Django](https://docs.djangoproject.com/en/4.1/intro/tutorial01/) Project
+
+<a name="entorno_virtual"></a>
 
 ### 1. Validar que se tenga instalado el entorno virtual [virtualenv](https://omes-va.com/virtualenv-python/), en caso de no tenerlo instalado ejecutar el segundo comando
     pip list o pip freeze
