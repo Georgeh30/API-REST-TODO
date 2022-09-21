@@ -4,6 +4,7 @@
 REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web application where the only data is the task title and its description
 
 ## Índice de contenidos
+* [Correr Projecto en otras computadoras](#run_project_others_pc)
 * [Instalacion del lenguaje python](#install_python)
 * [Creacion de archivo .gitignore](#create_gitignore)
 * [Steps for the creation of Django](#creation_django)
@@ -11,7 +12,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
 
 [Subir](#top)
-<a name="install_python"></a>
+<a name="run_project_others_pc"></a>
 
 ## Correr Projecto en otras computadoras
 
@@ -24,7 +25,8 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ### 1. Desde la pagina [toptal](https://www.toptal.com/developers/gitignore/?templates=django), crearemos el archivo especial para django, para ello podemos copiar o guardar como `.gitignore` en la carpeta raiz de este proyecto, si copiamos los datos, tendremos que ejecutar los comandos de abajo para crear el archivo y pegar estos datos en el y despues apretando (`CTRL + C`) para terminar el proceso
     copy con .gitignore
 
-
+[Subir](#top)
+<a name="install_python"></a>
 <a name="intalacion_python"></a>
 
 ## Instalacion del lenguaje [python](https://www.youtube.com/watch?v=JqUV25aFRV0)
