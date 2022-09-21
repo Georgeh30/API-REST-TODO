@@ -17,7 +17,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ## Correr Projecto en otras computadoras
 
 ### 1. Se deberá tener [instalado](#intalacion_python) el lenguaje de programacion python
-### 2. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [crear](#crear_venv) un nuevo entorno virtual, [activar](#activar_venv) el entorno virtual e [instalacion](#dependencias) de todas las demas dependencias
+### 2. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [crear](#crear_venv) un nuevo entorno virtual, [activar](#activar_venv) el entorno virtual, [instalacion](#dependencias) de todas las demas dependencias y [corremos](#run_server) el servidor
 
 
 ## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
@@ -98,7 +98,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         name = 'core.todo'
 ### 10. Creamos el archivo llamado `__init__` dentro de la carpeta `core` con el siguiente comando y en seguida apretando (`CTRL + C`) para terminar de crear el archivo, este archivo debera ser creado en el mismo nivel de las carpetas de las aplicaciones que se crean dentro de la carpeta `core`
     copy con __init__.py
-### 11. Creamos la carpeta `settings` e ingresamos a la carpeta
+### 11. Ahora ingresamos a la carpeta `project's_name` y creamos la carpeta `settings` e ingresamos en ella
     md settings
     cd settings
 ### 12. Dentro de la carpeta `settings` crearemos 5 archivos (`__init__.py, local.py, production.py, base.py, db.py`), en cada creacion apretaremos las teclas (`CTRL + C`) para terminar la creacion de cada archivo `.py`
@@ -107,7 +107,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     copy con db.py
     copy con local.py
     copy con production.py
-### 13. Para el codigo del archivo `base.py`, se debe copiar el codigo de `project's_name/settings.py` e ir quitando el siguiente codigo dentro de `base.py`
+### 13. Para el codigo del archivo `base.py`, se debe copiar el codigo de `project's_name/settings.py`, ir quitando el siguiente codigo dentro de `base.py`
     from pathlib import Path
 
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,7 +132,30 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
     STATIC_URL = 'static/'
-### 14. Codigo del archivo `db.py`, podemos agregar configuracion de conexion a varias Base de datos, pero por default se usara `SQLITE` en el archivo `local.py` en nuestro local o `production.py` en el servidor donde despleguemos el proyecto
+### 14. Estando dentro del archivo `base.py` separaremos en 3 variables la variable `INSTALLED_APPS` para que quede asi
+    BASE_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]
+
+    LOCAL_APPS = [
+        'core.app_name'
+    ]
+
+    THIRD_APPS = [
+        'corsheaders',
+        'rest_framework',
+        'rest_framework.authtoken',
+        'rest_framework_simplejwt',  
+        'rest_framework_simplejwt.token_blacklist'
+    ]
+
+    INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+### 15. Codigo del archivo `db.py`, podemos agregar configuracion de conexion a varias Base de datos, pero por default se usara `SQLITE` en el archivo `local.py` en nuestro local o `production.py` en el servidor donde despleguemos el proyecto
     from pathlib import Path
 
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -175,7 +198,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
             }
         }
     } """
-### 15. Codigo del archivo `local.py`
+### 16. Codigo del archivo `local.py`
     from .base import *
     from config.settings import db
 
@@ -198,7 +221,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # STATICFILES_DIRS = (BASE_DIR, 'static') # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
     # MEDIA_URL = '/media/'
     # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-### 16. Codigo del archivo `production.py`
+### 17. Codigo del archivo `production.py`
     from .base import *
     from settings import db
 
@@ -217,13 +240,13 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
     STATIC_URL = 'static/'
-### 17. Una vez teniendo `base.py` configurado, se deberá eliminar el archivo `project's_name/settings.py`
+### 18. Una vez teniendo `base.py` configurado, se deberá eliminar el archivo `project's_name/settings.py`
     cd ..
     del /f /a settings.py
-### 18. Regresamos a la carpeta raiz ejecutando dos veces el comando de retroceso
+### 19. Regresamos a la carpeta raiz ejecutando dos veces el comando de retroceso
     cd ..
     cd ..
-### 19. Dentro del archivo `manage.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')`, quedando de esta manera el archivo
+### 20. Dentro del archivo `manage.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
     #!/usr/bin/env python
     """Django's command-line utility for administrative tasks."""
     import os
@@ -232,7 +255,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
     def main():
         """Run administrative tasks."""
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local') # 'config.settings.local'  # 'config.settings.production'
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings.local') # 'project's_name.settings.local'  # 'project's_name.settings.production'
         try:
             from django.core.management import execute_from_command_line
         except ImportError as exc:
@@ -246,15 +269,52 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
     if __name__ == '__main__':
         main()
-### 20. Ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
+### 21. Dentro del archivo `project's_name/asgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
+    """
+    ASGI config for config project.
+
+    It exposes the ASGI callable as a module-level variable named ``application``.
+
+    For more information on this file, see
+    https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
+    """
+
+    import os
+
+    from django.core.asgi import get_asgi_application
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings.local') # 'project's_name.settings.local'  # 'project's_name.settings.production'
+
+    application = get_asgi_application()
+### 22. Dentro del archivo `project's_name/wsgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
+    """
+    WSGI config for config project.
+
+    It exposes the WSGI callable as a module-level variable named ``application``.
+
+    For more information on this file, see
+    https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
+    """
+
+    import os
+
+    from django.core.wsgi import get_wsgi_application
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings.local') # 'project's_name.settings.local'  # 'project's_name.settings.production'
+
+    application = get_wsgi_application()
+### 23. Ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
     cd ..
     python manage.py migrate
-### 21. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
+
+<a name="run_server"></a>
+
+### 24. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
     python manage.py runserver
     python manage.py runserver 3000
-### 22. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
+### 25. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
     python manage.py --help
-### 23. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
+### 26. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -264,7 +324,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         'django.contrib.staticfiles',
         'core.app_name',
     ]
-### 24. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
+### 27. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
     from django.db import models
 
     # Create your models here.
@@ -276,10 +336,10 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
         def _str_(self):
             return self.title
-### 25. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
+### 28. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
     python manage.py makemigrations
     python manage.py migrate
-### 26. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
+### 29. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
     from django.contrib import admin
     from .models import Todo
 
@@ -289,7 +349,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # Register your models here.
 
     admin.site.register(Todo, TodoAdmin)
-### 27. Creación de la cuenta `superuser` para acceder a la interfaz de administración
+### 30. Creación de la cuenta `superuser` para acceder a la interfaz de administración
     python manage.py createsuperuser
 
     Username (leave blank to use 'Computer_UserName'): superuser_name
@@ -297,10 +357,10 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     Password: password_we_want_to_use
     Password (again): confirm_password
     Superuser created successfully.
-### 28. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingresar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
+### 31. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingresar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
     python manage.py runserver
-### 29. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
-    py -m pip install djangorestframework django-cors-headers
+### 32. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
+    py -m pip install djangorestframework django-cors-headers markdown django-filter
 
 
 [Subir](#top)

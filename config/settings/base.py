@@ -20,15 +20,28 @@ SECRET_KEY = 'django-insecure-d*_8yg3sb&1x2ii^3pasev_l$oc*p1s%ur=+lf#hkv%n=u9yd7
 
 # Application definition
 
-INSTALLED_APPS = [
+BASE_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+LOCAL_APPS = [
     'core.todo'
 ]
+
+THIRD_APPS = [
+    # 'corsheaders',
+    # 'rest_framework',
+    #'rest_framework.authtoken',
+    # 'rest_framework_simplejwt',  
+    # 'rest_framework_simplejwt.token_blacklist'
+]
+
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -45,7 +58,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [], # Aqui es donde se debe agregar la carpeta de los html templates # [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

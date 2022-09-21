@@ -4,7 +4,7 @@ from settings import db
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] # https://docs.djangoproject.com/es/4.1/ref/settings/
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
