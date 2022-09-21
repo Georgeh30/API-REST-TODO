@@ -13,6 +13,20 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 [Subir](#top)
 <a name="install_python"></a>
 
+## Correr Projecto en otras computadoras
+
+### 1. Se deberá tener [instalado](#intalacion_python) el lenguaje de programacion python
+### 2. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [crear](#crear_venv) un nuevo entorno virtual, [activar](#activar_venv) el entorno virtual e [instalacion](#dependencias) de todas las demas dependencias
+
+
+## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
+
+### 1. Desde la pagina [toptal](https://www.toptal.com/developers/gitignore/?templates=django), crearemos el archivo especial para django, para ello podemos copiar o guardar como `.gitignore` en la carpeta raiz de este proyecto, si copiamos los datos, tendremos que ejecutar los comandos de abajo para crear el archivo y pegar estos datos en el y despues apretando (`CTRL + C`) para terminar el proceso
+    copy con .gitignore
+
+
+<a name="intalacion_python"></a>
+
 ## Instalacion del lenguaje [python](https://www.youtube.com/watch?v=JqUV25aFRV0)
 
 ### 1. Descargamos del [Instalador](https://www.python.org/downloads/)
@@ -48,11 +62,20 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     virtualenv --version
     pip uninstall virtualenv
     pip install virtualenv
+
+<a name="crear_venv"></a>
+
 ### 3. Creacion del Entorno Virtual
     virtualenv virtual_environment_name
+
+<a name="activar_venv"></a>
+
 ### 4. Activacion y Desactivacion del Entorno Virtual
     .\env\Scripts\activate
     .\env\Scripts\deactivate
+
+<a name="intalacion_django"></a>
+
 ### 5. Asegurando que esta activo el Entorno Virtual, Instalaremos el [Framework Django](https://docs.djangoproject.com/es/4.1/topics/install/#installing-official-release)
     py -m pip install Django
 ### 6. Verificamos que la terminal detecte el Framework Django, mostrando la version instalada, en caso de no detectar el modulo `django`, desinstalaremos el modulo y lo volvemos a instalar, para volver a validar la version del modulo.
@@ -280,6 +303,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
 [Subir](#top)
 <a name="creation_requirements"></a>
+<a name="dependencias"></a>
 
 ## [Creacion](https://www.youtube.com/watch?v=90YKt9PlWZY) de archivo `requirements.txt` e [Instalacion](https://gist.github.com/kamikaze-lab/7d5987ff86223e1bf686) de estas dependencias
 
