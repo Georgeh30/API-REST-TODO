@@ -1,5 +1,17 @@
+<a name="top"></a>
+
 # API-REST-TODO
 REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web application where the only data is the task title and its description
+
+## Índice de contenidos
+* [Instalacion del lenguaje python](#install_python)
+* [Creacion de archivo .gitignore](#create_gitignore)
+* [Steps for the creation of Django](#creation_django)
+* [Creacion de Archivo requirements](#creation_requirements)
+
+
+[Subir](#top)
+<a name="install_python"></a>
 
 ## Instalacion del lenguaje [python](https://www.youtube.com/watch?v=JqUV25aFRV0)
 
@@ -13,11 +25,17 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ## 6. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), activar el entorno virtual, instalar el framework django y todas las dependencias
 
 
+[Subir](#top)
+<a name="create_gitignore"></a>
+
 ## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
 
 ### 1. Desde la pagina [toptal](https://www.toptal.com/developers/gitignore/?templates=django), crearemos el archivo especial para django, para ello podemos copiar o guardar como `.gitignore` en la carpeta raiz de este proyecto, si copiamos los datos, tendremos que ejecutar los comandos de abajo para crear el archivo y pegar estos datos en el y despues apretando (`CTRL + C`) para terminar el proceso
     copy con .gitignore
 
+
+[Subir](#top)
+<a name="creation_django"></a>
 
 ## Steps for the creation of [Django](https://docs.djangoproject.com/en/4.1/intro/tutorial01/) Project
 
@@ -260,7 +278,11 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     py -m pip install djangorestframework django-cors-headers
 
 
+[Subir](#top)
+<a name="creation_requirements"></a>
+
 ## [Creacion](https://www.youtube.com/watch?v=90YKt9PlWZY) de archivo `requirements.txt` e [Instalacion](https://gist.github.com/kamikaze-lab/7d5987ff86223e1bf686) de estas dependencias
+
 ### 1. Para crear el archivo que especifica las dependencias requeridas para usar este proyecto y para la instalacion de las dependencias
     pip freeze > requirements.txt
     pip install -r requirements.txt
