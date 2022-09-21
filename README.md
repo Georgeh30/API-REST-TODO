@@ -5,7 +5,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ## Correr Projecto en otras computadoras
 
 ### 1. Se deberá tener [instalado](#intalacion_python) el lenguaje de programacion python
-### 2. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [crear](#crear_venv) un nuevo entorno virtual, [activar](#activar_venv) el entorno virtual, [instalar](#intalacion_django) el framework django e [instalacion](#dependencias) de todas las demas dependencias
+### 2. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [crear](#crear_venv) un nuevo entorno virtual, [activar](#activar_venv) el entorno virtual e [instalacion](#dependencias) de todas las demas dependencias
 
 
 ## Creacion de archivo [.gitignore](https://www.toptal.com/developers/gitignore/)
