@@ -361,7 +361,40 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     python manage.py runserver
 ### 32. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
     py -m pip install djangorestframework django-cors-headers markdown django-filter
+### 33. Agregamos los modulos dentro de la variable `THIRD_APPS` que creamos dentro del archivo `project's_name/settings/base.py`
+    THIRD_APPS = [
+        'rest_framework',
+        'corsheaders',
+        #'rest_framework.authtoken',
+        # 'rest_framework_simplejwt',  
+        # 'rest_framework_simplejwt.token_blacklist'
+    ]
+### 34. Creamos una carpeta `core/app_name/api` en la cual creamos dentro de ella dos carpetas `api/serializers` y `api/viewsets` y crearemos los archivos respectivos dentro de cada carpeta
+    cd core/app_name
+    md api
+    cd api
+    copy con routers.py
+    copy con urls.py
+    md viewsets
+    cd viewsets
+    copy con app_name_viewsets.py
+    cd ..
+    md serializers
+    cd serializers
+    copy con app_name_serializers.py
+    cd ..
+    cd ..
+    cd ..
+    cd ..
+### 35. Estnado en la carpeta raiz, debemos agregar el codigo correspondiente en el archivo `core/app_name/serializers/app_name_serializers.py`
+    from rest_framework import serializers
+    from todo.models import Todo
 
+    class TodoSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Todo
+            fields = ('id','title','description','completed')
+### 36. Pending...
 
 [Subir](#top)
 <a name="creation_requirements"></a>
