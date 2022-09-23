@@ -386,7 +386,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     cd ..
     cd ..
     cd ..
-### 35. Estnado en la carpeta raiz, debemos agregar el codigo correspondiente en el archivo `core/app_name/serializers/app_name_serializers.py`
+### 35. Estando en la carpeta raiz, debemos agregar el codigo correspondiente en el archivo `core/app_name/serializers/app_name_serializers.py`
     from rest_framework import serializers
     from todo.models import Todo
 
