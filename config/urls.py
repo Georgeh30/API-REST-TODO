@@ -18,6 +18,18 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.todo.api.urls')),
-    # path('api/', include('core.todo.api.urls')),
+
+    # Wire up our API using automatic URL routing.
+    # Additionally, we include login URLs for the browsable API.
+    path('', include('core.todo.api.urls')), # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+    # Esta url sirve para mostrar la opcion de "Log out" en la vista de Django REST Framework
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+
+
+
+    # path('', include('core.todo.api.urls')), # https://www.youtube.com/watch?v=GE0Q8YNKNgs
+
+
+
+    # path('api/', include('core.todo.api.urls')), # https://gitlab.com/wdavilav/apolo/-/blob/master/config/urls.py
 ]

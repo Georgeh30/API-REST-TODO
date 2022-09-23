@@ -1,4 +1,25 @@
-from django.shortcuts import render
+# CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+from core.todo.models import Todo
+from rest_framework import viewsets, permissions
+from core.todo.api.serializers.todo_serializers import TodoSerializer
+from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
+
+# Create your views here.
+
+class TodoViewSet(viewsets.ModelViewSet):
+    """
+    IsAuthenticatedOrReadOnly -> Está autenticado o es de solo lectura \n
+    IsAuthenticated -> Está autenticado \n
+    AllowAny -> Permitir Cualquiera
+    """
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly] # [permissions.IsAuthenticatedOrReadOnly]
+
+
+
+""" # CODE TO https://www.youtube.com/watch?v=GE0Q8YNKNgs AND https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
 from rest_framework import viewsets, permissions
 from core.todo.api.serializers.todo_serializers import TodoSerializer
 from core.todo.models import Todo
@@ -8,9 +29,12 @@ from core.todo.models import Todo
 class TodoViewSet(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     permission_classes = [permissions.AllowAny] # [permissions.IsAuthenticated]
-    queryset = Todo.objects.all()
+    queryset = Todo.objects.all() """
 
-""" from rest_framework.authentication import TokenAuthentication
+
+
+""" # CODE TO https://gitlab.com/wdavilav/apolo/-/blob/master/core/api/views.py
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
