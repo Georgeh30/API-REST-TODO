@@ -21,9 +21,9 @@ urlpatterns = [
 
     # Wire up our API using automatic URL routing.
     # Additionally, we include login URLs for the browsable API.
-    path('', include('core.todo.api.urls')), # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+    # path('', include('core.todo.api.urls')), # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
     # Esta url sirve para mostrar la opcion de "Log out" en la vista de Django REST Framework
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
 
 
 
@@ -32,4 +32,8 @@ urlpatterns = [
 
 
     # path('api/', include('core.todo.api.urls')), # https://gitlab.com/wdavilav/apolo/-/blob/master/config/urls.py
+
+
+    path('api-auth/', include('rest_framework.urls')),
+    path('', include('core.todo.api.urls')),
 ]

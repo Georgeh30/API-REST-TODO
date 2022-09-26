@@ -1,4 +1,4 @@
-from django.contrib import admin
+""" from django.contrib import admin
 from .models import Todo
 
 class TodoAdmin(admin.ModelAdmin):
@@ -6,4 +6,14 @@ class TodoAdmin(admin.ModelAdmin):
 
 # Register your models here.
 
-admin.site.register(Todo, TodoAdmin)
+admin.site.register(Todo, TodoAdmin) """
+
+from django.contrib import admin
+from .models import Snippet
+
+class SnippetAdmin(admin.ModelAdmin):
+    list_display = ('created', 'title', 'code', 'linenos', 'language', 'style')
+
+# Register your models here.
+
+admin.site.register(Snippet, SnippetAdmin)

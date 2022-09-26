@@ -1,11 +1,11 @@
-# CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
+""" # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
 from rest_framework import routers
 from core.todo.api.viewsets  import todo_viewsets
 
 router = routers.DefaultRouter()
 router.register(r'todo', todo_viewsets.TodoViewSet)
 
-urlpatterns = router.urls
+urlpatterns = router.urls """
 
 
 
@@ -35,3 +35,34 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls """
+
+
+
+from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
+from core.todo.api.viewsets import todo_viewsets
+
+""" urlpatterns = [
+    path('snippets/', todo_viewsets.SnippetList.as_view(), name='snippet-list'),
+    path('snippets/<int:pk>/', todo_viewsets.SnippetDetail.as_view()),
+    path('users/', todo_viewsets.UserList.as_view(), name='user-list'),
+    path('users/<int:pk>/', todo_viewsets.UserDetail.as_view()),
+
+
+    path('', todo_viewsets.api_root),
+    path('snippets/<int:pk>/highlight/', todo_viewsets.SnippetHighlight.as_view()),
+] """
+
+# API endpoints
+urlpatterns = [
+    path('', todo_viewsets.api_root),
+
+    path('snippets/', todo_viewsets.SnippetList.as_view(), name='snippet-list'),
+    path('snippets/<int:pk>/', todo_viewsets.SnippetDetail.as_view(), name='snippet-detail'),
+    path('snippets/<int:pk>/highlight/', todo_viewsets.SnippetHighlight.as_view(), name='snippet-highlight'),
+    
+    path('users/', todo_viewsets.UserList.as_view(), name='user-list'),
+    path('users/<int:pk>/', todo_viewsets.UserDetail.as_view(), name='user-detail')
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

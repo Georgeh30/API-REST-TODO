@@ -360,7 +360,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 ### 31. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingresar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
     python manage.py runserver
 ### 32. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
-    py -m pip install djangorestframework django-cors-headers markdown django-filter
+    py -m pip install djangorestframework django-cors-headers markdown django-filter pygments
 ### 33. Agregamos los modulos dentro de la variable `THIRD_APPS` que creamos dentro del archivo `project's_name/settings/base.py`
     THIRD_APPS = [
         'rest_framework',
