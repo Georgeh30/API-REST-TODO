@@ -34,7 +34,7 @@ class TodoSerializers(serializers.ModelSerializer):
 
 # CODE TO https://www.django-rest-framework.org/tutorial/1-serialization/
 from rest_framework import serializers
-from core.todo.models import Snippet
+from core.todo.models import Snippet, Todo
 from django.contrib.auth.models import User
 
 class SnippetSerializer(serializers.HyperlinkedModelSerializer):
@@ -44,6 +44,13 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Snippet
         fields = ['url', 'id', 'highlight', 'owner', 'title', 'code', 'linenos', 'language', 'style']
+
+class TodoSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = Todo
+        fields = ['id', 'title', 'description', 'completed', 'owner']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     snippets = serializers.HyperlinkedRelatedField(many=True, view_name='snippet-detail', read_only=True)

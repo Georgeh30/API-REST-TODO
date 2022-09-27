@@ -100,59 +100,128 @@ class TodoViewSet(ModelViewSet):
 
 
 # CODE TO 
-from core.todo.models import Snippet
-from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserSerializer
-from rest_framework import generics, permissions
+# from core.todo.models import Snippet
+# from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserSerializer
+# from rest_framework import generics, permissions
+# from django.contrib.auth.models import User
+
+# from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
+# from rest_framework.reverse import reverse
+
+
+# from rest_framework.decorators import api_view
+# from rest_framework.response import Response
+# from rest_framework.reverse import reverse
+# from rest_framework import renderers
+
+# class SnippetList(generics.ListCreateAPIView):
+#     queryset = Snippet.objects.all()
+#     serializer_class = SnippetSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
+
+
+# class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+#     # IsOwnerOrReadOnly -> Es propietario o solo lectura
+
+#     queryset = Snippet.objects.all()
+#     serializer_class = SnippetSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+# class UserList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+# @api_view(['GET'])
+# def api_root(request, format=None):
+#     return Response({
+#         'users': reverse('user-list', request=request, format=format),
+#         'snippets': reverse('snippet-list', request=request, format=format)
+#     })
+
+# class SnippetHighlight(generics.GenericAPIView):
+#     queryset = Snippet.objects.all()
+#     renderer_classes = [renderers.StaticHTMLRenderer]
+
+#     def get(self, request, *args, **kwargs):
+#         snippet = self.get_object()
+#         return Response(snippet.highlighted)
+
+
+
+
+
+# CODE TO https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/#refactoring-to-use-viewsets
 from django.contrib.auth.models import User
-
-from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
-
-
-from rest_framework.decorators import api_view
+from rest_framework import permissions, renderers, viewsets, filters
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from rest_framework import renderers
+
+from core.todo.models import Snippet, Todo
+from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
+from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserSerializer, TodoSerializer
 
 
-class SnippetList(generics.ListCreateAPIView):
+class IsOwnerFilterBackend(filters.BaseFilterBackend):
+    """
+    Filter that only allows users to see their own objects.
+    """
+    def filter_queryset(self, request, queryset, view):
+        return queryset.filter(owner=request.user.id)
+
+class IsOwnerFilterBackendUsers(filters.BaseFilterBackend):
+    """
+    Filter that only allows users to see their own objects.
+    """
+    def filter_queryset(self, request, queryset, view):
+        return queryset.filter(username=request.user)
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [IsOwnerFilterBackendUsers]
+
+class SnippetViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly] # Si no esta auntentificado, solo puede ver los datos, Si el detalle de los datos no los creo el usuario auntentificado solo podra verlos
+    filter_backends = [IsOwnerFilterBackend] # filtra solo los datos creador por el usuario autentificado
+
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+class TodoViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
 
-class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
-    # IsOwnerOrReadOnly -> Es propietario o solo lectura
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly] # Si no esta auntentificado, solo puede ver los datos, Si el detalle de los datos no los creo el usuario auntentificado solo podra verlos
+    filter_backends = [IsOwnerFilterBackend] # filtra solo los datos creador por el usuario autentificado
 
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-
-
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'snippets': reverse('snippet-list', request=request, format=format)
-    })
-
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
