@@ -160,7 +160,7 @@ class TodoViewSet(ModelViewSet):
 
 # CODE TO https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/#refactoring-to-use-viewsets
 from django.contrib.auth.models import User
-from rest_framework import permissions, renderers, viewsets, filters
+from rest_framework import permissions, renderers, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -168,20 +168,7 @@ from core.todo.models import Snippet, Todo
 from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
 from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserSerializer, TodoSerializer
 
-
-class IsOwnerFilterBackend(filters.BaseFilterBackend):
-    """
-    Filter that only allows users to see their own objects.
-    """
-    def filter_queryset(self, request, queryset, view):
-        return queryset.filter(owner=request.user.id)
-
-class IsOwnerFilterBackendUsers(filters.BaseFilterBackend):
-    """
-    Filter that only allows users to see their own objects.
-    """
-    def filter_queryset(self, request, queryset, view):
-        return queryset.filter(username=request.user)
+from core.todo.api.filters.todo_filters import IsOwnerFilterBackend, IsOwnerFilterBackendUsers
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
