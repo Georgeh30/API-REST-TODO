@@ -1,8 +1,9 @@
-""" # CODE TO https://gitlab.com/wdavilav/apolo/-/blob/master/core/api/routers.py
 from rest_framework.routers import DefaultRouter
+from core.todo.api.viewsets import todo_viewsets
 
-from core.todo.api.viewsets.todo_viewsets import TodoViewSet
-
+# Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'todo', TodoViewSet, basename='todo')
- """
+
+router.register(r'snippets', todo_viewsets.SnippetViewSet, basename="snippet")
+router.register(r'users', todo_viewsets.UserViewSet, basename="user")
+router.register(r'todos', todo_viewsets.TodoViewSet, basename="todo")

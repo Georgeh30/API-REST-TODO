@@ -8,6 +8,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 * [Instalacion del lenguaje python](#install_python)
 * [Creacion de archivo .gitignore](#create_gitignore)
 * [Steps for the creation of Django](#creation_django)
+* [Install and config Django Rest Framework](#config_drf)
 * [Creacion de Archivo requirements](#creation_requirements)
 
 
@@ -38,7 +39,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     python --version
     pip --version
 ### 5. En caso de no reconocer el comando `python`, deberemos agregarlo a las [variables de entorno](https://www.sintaxisweb.com/2019/03/adicione-python-la-variable-path-del.html#:~:text=En%20su%20equipo%20ubique%20la,el%20listado%20variable%20de%20entorno.)
-## 6. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), activar el entorno virtual, instalar el framework django y todas las dependencias
+### 6. Una vez que se reconoce el comando `python` se deberá instalar el [entorno virtual](#entorno_virtual), [activar](#activar_venv) el entorno virtual, [{instalar](#creation_django) el framework django e [instalacion](#dependencias) de todas las dependencias.
 
 
 [Subir](#top)
@@ -132,30 +133,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
     STATIC_URL = 'static/'
-### 14. Estando dentro del archivo `base.py` separaremos en 3 variables la variable `INSTALLED_APPS` para que quede asi
-    BASE_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-    ]
-
-    LOCAL_APPS = [
-        'core.app_name'
-    ]
-
-    THIRD_APPS = [
-        'corsheaders',
-        'rest_framework',
-        'rest_framework.authtoken',
-        'rest_framework_simplejwt',  
-        'rest_framework_simplejwt.token_blacklist'
-    ]
-
-    INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
-### 15. Codigo del archivo `db.py`, podemos agregar configuracion de conexion a varias Base de datos, pero por default se usara `SQLITE` en el archivo `local.py` en nuestro local o `production.py` en el servidor donde despleguemos el proyecto
+### 14. Codigo del archivo `db.py`, podemos agregar configuracion de conexion a varias Base de datos, pero por default se usara `SQLITE` en el archivo `local.py` en nuestro local o `production.py` en el servidor donde despleguemos el proyecto
     from pathlib import Path
 
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -198,7 +176,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
             }
         }
     } """
-### 16. Codigo del archivo `local.py`
+### 15. Codigo del archivo `local.py`
     from .base import *
     from config.settings import db
 
@@ -221,7 +199,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # STATICFILES_DIRS = (BASE_DIR, 'static') # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
     # MEDIA_URL = '/media/'
     # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-### 17. Codigo del archivo `production.py`
+### 16. Codigo del archivo `production.py`
     from .base import *
     from settings import db
 
@@ -240,13 +218,13 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
     STATIC_URL = 'static/'
-### 18. Una vez teniendo `base.py` configurado, se deberá eliminar el archivo `project's_name/settings.py`
+### 17. Una vez teniendo `base.py` configurado, se deberá eliminar el archivo `project's_name/settings.py`
     cd ..
     del /f /a settings.py
-### 19. Regresamos a la carpeta raiz ejecutando dos veces el comando de retroceso
+### 18. Regresamos a la carpeta raiz ejecutando dos veces el comando de retroceso
     cd ..
     cd ..
-### 20. Dentro del archivo `manage.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
+### 19. Dentro del archivo `manage.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
     #!/usr/bin/env python
     """Django's command-line utility for administrative tasks."""
     import os
@@ -269,7 +247,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
 
     if __name__ == '__main__':
         main()
-### 21. Dentro del archivo `project's_name/asgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
+### 20. Dentro del archivo `project's_name/asgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
     """
     ASGI config for config project.
 
@@ -286,7 +264,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings.local') # 'project's_name.settings.local'  # 'project's_name.settings.production'
 
     application = get_asgi_application()
-### 22. Dentro del archivo `project's_name/wsgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
+### 21. Dentro del archivo `project's_name/wsgi.py`, agregaremos `.local` o `.production` dependiendo si estamos en nuestro local o en el servidor donde despleguemos el proyecto, en la linea de codigo `os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings')`, quedando de esta manera el archivo
     """
     WSGI config for config project.
 
@@ -303,43 +281,54 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project's_name.settings.local') # 'project's_name.settings.local'  # 'project's_name.settings.production'
 
     application = get_wsgi_application()
-### 23. Ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
+### 22. Ejecutar la `migrate` para crear la base de datos SQLite y crear las tablas que vienen por default en Django
     cd ..
     python manage.py migrate
 
 <a name="run_server"></a>
 
-### 24. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
+### 23. Correr el Servidor y navegue a `http://localhost:8000` en el navegador, para detener el Servidor (`CTRL + C`), tambien se puede navegar en otro puerto ej: 3000
     python manage.py runserver
     python manage.py runserver 3000
-### 25. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
+### 24. Para obtener un listado de todos los comandos que se pueden ejecutar con `manage.py`
     python manage.py --help
-### 26. Registro de la app `core.app_name` dentro del archivo `project's_name/settings.py`, dentro de la lista de la variable `INSTALLED_APPS`
-    INSTALLED_APPS = [
+### 25. Estando dentro del archivo `project's_name/settings/base.py` separaremos en 3 variables la variable `INSTALLED_APPS` y registramos la app `core.app_name` dentro de la variable `LOCAL_APPS`, dejamos comentado la variable `THIRD_APPS` hasta tener apps de terceros instaladas.
+    BASE_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        'core.app_name',
     ]
-### 27. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
+
+    LOCAL_APPS = [
+        'core.app_name'
+    ]
+
+    '''THIRD_APPS = [
+        
+    ]'''
+
+    INSTALLED_APPS = BASE_APPS + LOCAL_APPS '''+ THIRD_APPS'''
+### 26. Creacion de `Mapeo Objeto-Relacional (ORM)` a través de `Clases` dentro del archivo `core/app_name/models.py`, en lugar de escribir consultas SQL, aunque podemos usar consultas SQL para los casos mas complejos
     from django.db import models
 
     # Create your models here.
 
     class Todo(models.Model):
+        created = models.DateTimeField(auto_now_add=True)
         title = models.CharField(max_length=120)
         description = models.TextField()
         completed = models.BooleanField(default=False)
+        owner = models.ForeignKey('auth.User', related_name='todos', on_delete=models.CASCADE)
 
         def _str_(self):
             return self.title
-### 28. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
+### 27. Detenemos el servidor (`CTRL + C`) ya que al agregar, modificar o quitar codigo dentro del archivo `core/app_name/models.py` se deberá ejecutar los siguientes dos comandos para crear un archivo de migracion y para aplicarlos en la base de datos
     python manage.py makemigrations
     python manage.py migrate
-### 29. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
+### 28. Para probar el CRUD del `modelo (tabla)` creado, se deberá agregar este `modelo` en el archivo `core/app_name/admin.py`
     from django.contrib import admin
     from .models import Todo
 
@@ -349,7 +338,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     # Register your models here.
 
     admin.site.register(Todo, TodoAdmin)
-### 30. Creación de la cuenta `superuser` para acceder a la interfaz de administración
+### 29. Creación de la cuenta `superuser` para acceder a la interfaz de administración
     python manage.py createsuperuser
 
     Username (leave blank to use 'Computer_UserName'): superuser_name
@@ -357,24 +346,49 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     Password: password_we_want_to_use
     Password (again): confirm_password
     Superuser created successfully.
+### 30. Agregamos el `PATH` de la vista `ADMIN` en el archivo `project's_name/urls.py`
+    from django.contrib import admin
+    from django.urls import path
+
+    urlpatterns = [
+        path('admin/', admin.site.urls), # Page Admin
+    ]
 ### 31. Volvemos a correr el servidor e ingresamos a la ruta `http://localhost:8000/admin`, deberemos iniciar sesion como `superuser` con el nombre y contraseña que asignamos, para poder ingresar a la interfaz y realizar el CRUD (crear, leer, actualizar, borrar)
     python manage.py runserver
+
+<a name="config_drf"></a>
+
 ### 32. Detenemos el servidor (`CTRL + C`) para poder configurar la [DJANGO REST FRAMEWORK](https://www.django-rest-framework.org/#installation) instalando `djangorestframework` y `django-cors-headers`, el ultimo nos sirve para poder evitar errores debidos a las reglas CORS y acortar la url
     py -m pip install djangorestframework django-cors-headers markdown django-filter pygments
-### 33. Agregamos los modulos dentro de la variable `THIRD_APPS` que creamos dentro del archivo `project's_name/settings/base.py`
+### 33. Descomentamos y agregamos los modulos dentro de la variable `THIRD_APPS` que creamos dentro del archivo `project's_name/settings/base.py`
     THIRD_APPS = [
         'rest_framework',
         'corsheaders',
-        #'rest_framework.authtoken',
-        # 'rest_framework_simplejwt',  
-        # 'rest_framework_simplejwt.token_blacklist'
     ]
-### 34. Creamos una carpeta `core/app_name/api` en la cual creamos dentro de ella dos carpetas `api/serializers` y `api/viewsets` y crearemos los archivos respectivos dentro de cada carpeta
+
+    INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+### 34. Agregamos el `PATH` en el archivo `project's_name/urls.py` para poder loguear y desloguearse desde la interfaz que ofrece `DJANGO REST FRAMEWORK`
+    from django.contrib import admin
+    from django.urls import include, path
+
+    urlpatterns = [
+        path('admin/', admin.site.urls), # Page Admin
+        path('api-auth/', include('rest_framework.urls')), # Page log in and Log out Django Rest Framework Authentication Sesion
+    ]
+### 35. Creamos una carpeta `core/app_name/api` en la cual creamos dentro de ella dos archivos (`routers.py` y `urls.py`) y 4 carpetas (`api/serializers`, `api/viewsets`, `api/filters`, `api/permissions`) creando los archivos respectivos dentro de cada carpeta
     cd core/app_name
     md api
     cd api
     copy con routers.py
     copy con urls.py
+    md filters
+    cd filters
+    copy con app_name_filters.py
+    cd ..
+    md permissions
+    cd viewsets
+    copy con app_name_permissions.py
+    cd ..
     md viewsets
     cd viewsets
     copy con app_name_viewsets.py
@@ -386,15 +400,146 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
     cd ..
     cd ..
     cd ..
-### 35. Estando en la carpeta raiz, debemos agregar el codigo correspondiente en el archivo `core/app_name/serializers/app_name_serializers.py`
+### 36. Estando en la carpeta raiz, debemos agregar el codigo correspondiente en el archivo `core/app_name/serializers/app_name_serializers.py`
     from rest_framework import serializers
-    from todo.models import Todo
+    from core.todo.models import Todo
 
+    # Para convertir los datos de la base de datos en objeto JSON
     class TodoSerializer(serializers.ModelSerializer):
+        owner = serializers.ReadOnlyField(source='owner.username')
+
         class Meta:
             model = Todo
-            fields = ('id','title','description','completed')
-### 36. Pending...
+            fields = '__all__'
+### 37. Agregar el codigo correspondiente en el archivo `core/app_name/api/permissions/app_name_permissions.py`
+    from rest_framework import permissions
+
+    # Para dar Acceso de solo lectura, si no esta logueado y no es el usuario quien creo el dato
+    class IsOwnerOrReadOnly(permissions.BasePermission):
+        """
+        Custom permission to only allow owners of an object to edit it.
+        """
+
+        def has_object_permission(self, request, view, obj):
+            # Read permissions are allowed to any request,
+            # so we'll always allow GET, HEAD or OPTIONS requests.
+
+            # Condicion para poder ver el detalle de cada objeto aunque no sea el usuario quien lo creo
+            if request.method in permissions.SAFE_METHODS:
+                return True
+
+            # Condicion para poder modificar y eliminar el objeto solo el usuario quien lo creo
+            # Write permissions are only allowed to the owner of the snippet.
+            return obj.owner == request.user
+### 38. Agregar el codigo correspondiente en el archivo `core/app_name/api/filters/app_name_filters.py`
+    from rest_framework import viewsets, filters
+
+    # Para dar filtro de datos creados por usuario
+    class IsOwnerFilterBackend(filters.BaseFilterBackend):
+        """
+        Filter that only allows users to see their own objects.
+        """
+        def filter_queryset(self, request, queryset, view):
+            return queryset.filter(owner=request.user.id)
+### 39. Agregar el codigo correspondiente en el archivo `core/app_name/api/viewsets/app_name_viewsets.py`
+    from rest_framework import permissions viewsets
+    from core.todo.models import Todo
+    from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
+    from core.todo.api.serializers.todo_serializers import TodoSerializer
+    from core.todo.api.filters.todo_filters import IsOwnerFilterBackend
+
+    # Para proporcionar los metodos REQUESTS sin necesitas de crear cada uno de ellos desde cero, al igual el uso de permisos y autentificaciones
+    class TodoViewSet(viewsets.ModelViewSet):
+        """
+        This viewset automatically provides `list`, `create`, `retrieve`,
+        `update` and `destroy` actions.
+
+        Additionally we also provide an extra `highlight` action.
+
+        IsAuthenticatedOrReadOnly -> Está autenticado o es de solo lectura \n
+        IsAuthenticated -> Está autenticado \n
+        AllowAny -> Permitir Cualquiera \n
+        IsOwnerOrReadOnly -> Si es el creador del objeto, si no solo lectura \n
+        IsOwnerFilterBackend -> Se filtrara solo sus objetos creados por el
+        """
+        queryset = Todo.objects.all() # queryset -> lista de objetos de un modelo determinado
+        serializer_class = TodoSerializer
+        permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly] # Si no esta auntentificado, solo puede ver los datos, Si el detalle de los datos no los creo el usuario auntentificado solo podra verlos
+        filter_backends = [IsOwnerFilterBackend] # filtra solo los datos creador por el usuario autentificado
+
+        def perform_create(self, serializer):
+            serializer.save(owner=self.request.user)
+### 40. Agregar el codigo correspondiente al archivo `core/app_name/api/routers.py`
+    from rest_framework.routers import DefaultRouter
+    from core.todo.api.viewsets import todo_viewsets
+
+    # Create a router and register our viewsets with it.
+    router = DefaultRouter()
+
+    # Los routers nos proporciona dos path para la lista de los objetos creados y el detalle de cada uno sin la necesidad de crearlos desde ceros cada uno
+    router.register(r'snippets', todo_viewsets.SnippetViewSet, basename="snippet")
+    router.register(r'users', todo_viewsets.UserViewSet, basename="user")
+    router.register(r'todos', todo_viewsets.TodoViewSet, basename="todo")
+### 41. Agregar el codigo correspondiente al archivo `core/app_name/api/urls.py`, para acceder a la `url` donde generaremos el token del usuario logueado y el `router` para crear y acceder a la lista y detalles de los objetos
+    from django.urls import path
+    from core.todo.api.routers import router
+    from rest_framework.authtoken.views import obtain_auth_token
+
+    # The API URLs are now determined automatically by the router.
+    urlpatterns = [
+        path('api-token-auth/', obtain_auth_token, name='api_token_auth'), # Generator token authentication
+    ]
+
+    # Agregamos al path anterior, los path creados en el archivo routers.py
+    urlpatterns += router.urls
+### 42. Agregamos `'rest_framework.authtoken'` en la variable `THIRD_APPS`, separamos la variable `MIDDLEWARE` y agregamos `'corsheaders.middleware.CorsMiddleware'` en la nueva variable `THIRD_MIDDLEWARE`, creamos la variable `REST_FRAMEWORK` para agregar las propiedades demanera globales para `DJANGO REST FRAMEWORK` y por ultimo creamos la variable `CORS_ORIGIN_WHITELIST` para asignar la url del servidor donde se encuentra la app quien usará la `API` dentro del archivo `project's_name/settings/base.py` para poder generar token por usuario, usarlo para la autenticacion por token y acceder a la `API REST`
+    THIRD_APPS = [
+        'rest_framework',
+        'corsheaders',
+        'rest_framework.authtoken',
+    ]
+
+    BASE_MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+
+    THIRD_MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+    ]
+
+    MIDDLEWARE = BASE_MIDDLEWARE + THIRD_MIDDLEWARE
+
+    # Django REST Framework
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.TokenAuthentication',
+        ],
+    }
+
+    CORS_ORIGIN_WHITELIST = [
+        'http://localhost:5173'
+    ]
+### 43. Ejecutamos el comando de migracion para poder crear las tablas que almacenaran los tokens de autenticacion, las cuales vienen con la importacion de la app `'rest_framework.authtoken'`
+    python manage.py migrate
+### 44. Agregamos `path('', include('core.app_name.api.urls')),` al archivo general `project's_name/urls.py` para poder acceder a las `urls` de `list` y `detail`
+    from django.contrib import admin
+    from django.urls import include, path
+
+    urlpatterns = [
+        path('admin/', admin.site.urls), # Page Admin
+        path('api-auth/', include('rest_framework.urls')), # Page log in and Log out Django Rest Framework Authentication Sesion
+        path('', include('core.todo.api.urls')), # Pages (General, List snippets, Details snippet, List user, Details user, List todo, Details todo, generator token api-token-auth)
+    ]
+### 45. Ejecutamos nuevamente el servidor
+    python manage.py runserver
 
 [Subir](#top)
 <a name="creation_requirements"></a>

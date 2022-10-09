@@ -17,23 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # Wire up our API using automatic URL routing.
-    # Additionally, we include login URLs for the browsable API.
-    # path('', include('core.todo.api.urls')), # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
-    # Esta url sirve para mostrar la opcion de "Log out" en la vista de Django REST Framework
-    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')) # CODE TO https://www.django-rest-framework.org/tutorial/quickstart/
-
-
-
-    # path('', include('core.todo.api.urls')), # https://www.youtube.com/watch?v=GE0Q8YNKNgs
-
-
-
-    # path('api/', include('core.todo.api.urls')), # https://gitlab.com/wdavilav/apolo/-/blob/master/config/urls.py
-
-
-    path('api-auth/', include('rest_framework.urls')),
-    path('', include('core.todo.api.urls')),
+    path('admin/', admin.site.urls), # Page Admin
+    path('api-auth/', include('rest_framework.urls')), # Page log in and Log out Django Rest Framework Authentication Sesion
+    path('', include('core.todo.api.urls')), # Pages (General, List snippets, Details snippet, List user, Details user, List todo, Details todo, generator token api-token-auth)
 ]
