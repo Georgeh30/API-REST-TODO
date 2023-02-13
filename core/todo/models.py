@@ -4,12 +4,13 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_all_lexers, get_lexer_by_name
 from pygments.styles import get_all_styles  
+from django.contrib.auth import get_user_model # NEW
 
 LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
 STYLE_CHOICES = sorted([(item, item) for item in get_all_styles()])
 
-
+User = get_user_model() # NEW
 class Snippet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
@@ -18,7 +19,7 @@ class Snippet(models.Model):
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
 
-    owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='snippets', on_delete=models.CASCADE) # NEW UPDATE
     highlighted = models.TextField()
 
     class Meta:
@@ -41,7 +42,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
     completed = models.BooleanField(default=False)
-    owner = models.ForeignKey('auth.User', related_name='todos', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='todos', on_delete=models.CASCADE) # NEW UPDATE
 
     def _str_(self):
         return self.title

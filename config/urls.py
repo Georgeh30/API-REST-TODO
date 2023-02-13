@@ -19,5 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls), # Page Admin
     path('api-auth/', include('rest_framework.urls')), # Page log in and Log out Django Rest Framework Authentication Sesion
-    path('', include('core.todo.api.urls')), # Pages (General, List snippets, Details snippet, List user, Details user, List todo, Details todo, generator token api-token-auth)
+    path('api-todo/', include('core.todo.api.urls')), # Pages (General, List snippets, Details snippet, List user, Details user, List todo, Details todo, generator token api-token-auth)
+    path('api-authenticator/', include('core.authenticator.api.urls')), # Pages ()
 ]

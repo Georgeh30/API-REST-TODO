@@ -432,7 +432,7 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
             # Write permissions are only allowed to the owner of the snippet.
             return obj.owner == request.user
 ### 38. Agregar el codigo correspondiente en el archivo `core/app_name/api/filters/app_name_filters.py`
-    from rest_framework import viewsets, filters
+    from rest_framework import filters
 
     # Para dar filtro de datos creados por usuario
     class IsOwnerFilterBackend(filters.BaseFilterBackend):
@@ -440,7 +440,15 @@ REST API created with DJANGO API REST FRAMEWORK for the use of the TO DO web app
         Filter that only allows users to see their own objects.
         """
         def filter_queryset(self, request, queryset, view):
-            return queryset.filter(owner=request.user.id)
+            return queryset.filter(owner=request.user)
+
+    class IsOwnerFilterBackendUsers(filters.BaseFilterBackend):
+        """
+        Filter that only allows users to see their own objects.
+        """
+        def filter_queryset(self, request, queryset, view):
+            return queryset.filter(pk=request.user.id)
+
 ### 39. Agregar el codigo correspondiente en el archivo `core/app_name/api/viewsets/app_name_viewsets.py`
     from rest_framework import permissions viewsets
     from core.todo.models import Todo

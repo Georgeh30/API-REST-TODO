@@ -30,7 +30,8 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    'core.todo'
+    'core.todo',
+    'core.authenticator' # NEW
 ]
 
 THIRD_APPS = [
@@ -41,6 +42,8 @@ THIRD_APPS = [
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
+# Actualizar la autenticación y el registro
+AUTH_USER_MODEL = 'authenticator.User' # NEW
 
 BASE_MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -118,12 +120,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication', # NEW
     ],
+    'DEFAULT_PERMISSION_CLASSES': [ # NEW
+        'rest_framework.permissions.IsAuthenticated', # NEW
+    ], # NEW
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.outlook.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jorge.alvarado1.7@outlook.com'
+EMAIL_HOST_PASSWORD = 'Mejicol147'
+EMAIL_USE_TLS = True
+
+SESSION_COOKIE_AGE = 3600 # 1 hour session active authentication per cookies
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173'

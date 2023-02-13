@@ -1,14 +1,16 @@
 # CODE TO https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/#refactoring-to-use-viewsets
-from django.contrib.auth.models import User
 from rest_framework import permissions, renderers, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from core.todo.models import Snippet, Todo
 from core.todo.api.permissions.todo_permissions import IsOwnerOrReadOnly
-from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserSerializer, TodoSerializer
+from core.todo.api.serializers.todo_serializers import SnippetSerializer, UserCreateSerializer, UserSerializer, TodoSerializer # NEW
 
 from core.todo.api.filters.todo_filters import IsOwnerFilterBackend, IsOwnerFilterBackendUsers
+from django.contrib.auth import get_user_model # NEW
+
+User = get_user_model() # NEW
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -58,3 +60,12 @@ class TodoViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+#  NEW PER CREATING NEW USER
+class UserCreateViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
+    filter_backends = [IsOwnerFilterBackendUsers]
+
+    def perform_create(self, serializer):
+        serializer.save()
