@@ -17,7 +17,10 @@ from django.conf import settings
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.decorators import action
+import threading
 
+# Crear un candado global para bloquear el acceso a la tabla de usuarios
+user_update_lock = threading.Lock()
 
 
 User = get_user_model()
@@ -105,9 +108,12 @@ class PasswordResetViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(email=email).first()
 
         if user:
+            pk_base64 = urlsafe_base64_encode(force_bytes(user.pk))
+            user_token = default_token_generator.make_token(user)
+            
             # Generate and send password reset email
             subject = 'Password reset on example.com'
-            message = message = 'Please visit the following link to reset your password: ' + request.build_absolute_uri("/api-authenticator/password_reset_confirm/" + urlsafe_base64_encode(force_bytes(user.pk)) + '/' + default_token_generator.make_token(user) + '/')
+            message = 'Please visit the following link to reset your password: ' + request.build_absolute_uri("/api-authenticator/password-reset-confirm/" + pk_base64 + '/' + user_token + '/')
             from_email = settings.EMAIL_HOST_USER
             recipient_list = [user.email]
             send_mail(subject, message, from_email, recipient_list)
@@ -124,16 +130,20 @@ class PasswordResetConfirmViewSet(viewsets.ModelViewSet):
     def update(self, request, uidb64, token, *args, **kwargs):
         try:
             # Get user by decoding uidb64 and checking token
-            uid = urlsafe_base64_decode(uidb64)
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
-            print(uid)
-            print(user)
-            print(token)
+            
             if default_token_generator.check_token(user, token):
                 # Update user password
                 serializer = self.get_serializer(user, data=request.data, partial=True)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
+                
+                # Set the new password and save the user instance
+                password = serializer.validated_data.get('password')
+                user.set_password(password)
+                user.save()
+                
                 return Response({'message': 'Password reset successfully'}, status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'Password reset failed. Invalid token'}, status=status.HTTP_400_BAD_REQUEST)

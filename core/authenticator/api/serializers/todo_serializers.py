@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from rest_framework import status
+from django.contrib.auth.hashers import make_password
 
 User = get_user_model()
 
@@ -85,11 +86,18 @@ class PasswordResetSerializer(serializers.Serializer):
 
 class PasswordResetConfirmSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
 
     class Meta:
         model = User
-        fields = ['password', 'confirm_password']
+        fields = ['password']
+    
+    def update(self, instance, validated_data):
+        password = validated_data.get('password')
+        hashed_password = make_password(password)
+        instance.password = hashed_password
+        instance.save()
+        
+        return instance
 
 class CheckSessionSerializer(serializers.ModelSerializer):
     class Meta:

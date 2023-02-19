@@ -132,6 +132,7 @@ REST_FRAMEWORK = {
 }
 
 
+EMAIL_FROM = 'jorge.alvarado1.7@outlook.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.outlook.com'
 EMAIL_PORT = 587
