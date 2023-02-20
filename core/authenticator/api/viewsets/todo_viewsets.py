@@ -123,32 +123,24 @@ class PasswordResetViewSet(viewsets.ModelViewSet):
         return Response({'message': 'User with this email does not exists'}, status=status.HTTP_400_BAD_REQUEST)
 
 class PasswordResetConfirmViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
     serializer_class = PasswordResetConfirmSerializer
     queryset = User.objects.all()
 
-    def update(self, request, uidb64, token, *args, **kwargs):
+    def create(self, request, pk_base64, user_token):
         try:
-            # Get user by decoding uidb64 and checking token
-            uid = force_str(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(pk_base64))
             user = User.objects.get(pk=uid)
-            
-            if default_token_generator.check_token(user, token):
-                # Update user password
-                serializer = self.get_serializer(user, data=request.data, partial=True)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-                
-                # Set the new password and save the user instance
-                password = serializer.validated_data.get('password')
-                user.set_password(password)
-                user.save()
-                
-                return Response({'message': 'Password reset successfully'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'message': 'Password reset failed. Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, user_token):
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)  # agregar esta línea
+            serializer.update(user, serializer.validated_data)
+        
+            return Response({'detail': 'Password reset successful'}, status=status.HTTP_200_OK)
+
+        return Response({'detail': 'Invalid reset link'}, status=status.HTTP_400_BAD_REQUEST)
 
 class CheckSessionViewSet(viewsets.ModelViewSet):
     authentication_classes = []

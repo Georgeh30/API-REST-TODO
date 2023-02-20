@@ -83,20 +83,20 @@ class PasswordResetSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError('User with this email does not exists')
         return value
-
-class PasswordResetConfirmSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['password']
-    
-    def update(self, instance, validated_data):
-        password = validated_data.get('password')
-        hashed_password = make_password(password)
-        instance.password = hashed_password
-        instance.save()
         
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError("Passwords do not match")
+        return data
+
+    def update(self, instance, validated_data):
+        print(instance)
+        instance.set_password(validated_data['password'])
+        instance.save()
         return instance
 
 class CheckSessionSerializer(serializers.ModelSerializer):
